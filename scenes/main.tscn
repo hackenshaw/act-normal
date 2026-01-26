@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c17trh52fmyxf"]
+[gd_scene load_steps=6 format=3 uid="uid://c17trh52fmyxf"]
 
 [ext_resource type="PackedScene" uid="uid://c0itnl3srtyk7" path="res://scenes/demo_location.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://c3liq1sfmyqp4" path="res://scenes/player.tscn" id="2_0wfyh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -31,3 +32,7 @@ shadow_enabled = true
 environment = SubResource("Environment_sugp2")
 
 [node name="DemoLocation" parent="World" instance=ExtResource("1_o5qli")]
+
+[node name="Players" type="Node3D" parent="World"]
+
+[node name="Player" parent="World/Players" instance=ExtResource("2_0wfyh")]
