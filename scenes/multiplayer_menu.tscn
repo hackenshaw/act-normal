@@ -1,0 +1,102 @@
+[gd_scene load_steps=2 format=3 uid="uid://rneglae45761"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_tbgi4"]
+
+[node name="MultiplayerMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Menu" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu"]
+layout_mode = 2
+text = "Multiplayer Menu"
+horizontal_alignment = 1
+
+[node name="PlayerItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/PlayerItem"]
+layout_mode = 2
+text = "Player name:"
+
+[node name="PlayerName" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/PlayerItem"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter name"
+alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/Panel/MarginContainer/Menu"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_tbgi4")
+
+[node name="HostItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Host Game"
+
+[node name="HostPort" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "4242"
+alignment = 1
+
+[node name="HostButton" type="Button" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Host"
+
+[node name="JoinItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem"]
+layout_mode = 2
+text = "Join Game"
+
+[node name="JoinIP" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "localhost"
+alignment = 1
+
+[node name="JoinPort" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "4242"
+alignment = 1
+
+[node name="JoinButton" type="Button" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Host"

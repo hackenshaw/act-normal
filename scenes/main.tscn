@@ -1,7 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://c17trh52fmyxf"]
+[gd_scene load_steps=11 format=3 uid="uid://c17trh52fmyxf"]
 
 [ext_resource type="PackedScene" uid="uid://c0itnl3srtyk7" path="res://scenes/demo_location.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://dx32mxwfboal7" path="res://scripts/main.gd" id="1_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://c3liq1sfmyqp4" path="res://scenes/player.tscn" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://c6hbieffbdy3k" path="res://scripts/e_net_server.gd" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://bf0fk20vfk5sn" path="res://scripts/e_net_client.gd" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://rneglae45761" path="res://scenes/multiplayer_menu.tscn" id="4_tefeu"]
+[ext_resource type="Script" uid="uid://djgwpjwunncir" path="res://scripts/multiplayer_menu.gd" id="5_o6xl0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -21,6 +26,7 @@ fog_light_color = Color(1, 1, 1, 1)
 fog_density = 0.002
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_tbgi4")
 
 [node name="World" type="Node3D" parent="."]
 
@@ -36,3 +42,16 @@ environment = SubResource("Environment_sugp2")
 [node name="Players" type="Node3D" parent="World"]
 
 [node name="Player" parent="World/Players" instance=ExtResource("2_0wfyh")]
+
+[node name="GUI" type="Node" parent="."]
+
+[node name="MultiplayerMenu" parent="GUI" instance=ExtResource("4_tefeu")]
+script = ExtResource("5_o6xl0")
+
+[node name="ServerInterface" type="Node" parent="."]
+
+[node name="ENetServer" type="Node" parent="ServerInterface"]
+script = ExtResource("3_sugp2")
+
+[node name="ENetClient" type="Node" parent="ServerInterface"]
+script = ExtResource("4_jyhfs")
