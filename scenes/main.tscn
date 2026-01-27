@@ -46,12 +46,15 @@ environment = SubResource("Environment_sugp2")
 [node name="GUI" type="Node" parent="."]
 
 [node name="MultiplayerMenu" parent="GUI" instance=ExtResource("4_tefeu")]
+unique_name_in_owner = true
 script = ExtResource("5_o6xl0")
 
 [node name="ServerInterface" type="Node" parent="."]
 
 [node name="ENetServer" type="Node" parent="ServerInterface"]
+unique_name_in_owner = true
 script = ExtResource("3_sugp2")
 
 [node name="ENetClient" type="Node" parent="ServerInterface"]
+unique_name_in_owner = true
 script = ExtResource("4_jyhfs")
