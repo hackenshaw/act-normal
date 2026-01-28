@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var camera_mount: Node3D = $CameraMount
 @onready var visuals: Node3D = $Visuals
+@onready var camera_3d: Camera3D = %Camera3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -14,6 +15,9 @@ var pre_auth:int = 666
 
 func _ready() -> void:
 	set_multiplayer_authority(name.to_int())
+	
+	if not is_multiplayer_authority():
+		camera_3d.queue_free()
 
 
 func _input(event: InputEvent) -> void:

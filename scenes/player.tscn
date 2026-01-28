@@ -36,4 +36,5 @@ mesh = SubResource("CylinderMesh_u8vuu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraMount" unique_id=543481013]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.976296, 0.21643962, 0, -0.21643962, 0.976296, 0, 1.4, 2.5)
