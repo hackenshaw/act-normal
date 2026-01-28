@@ -1,6 +1,8 @@
 class_name ENetServer
 extends Node
 
+signal spawn_host_player
+
 #@export var port: int = 4242
 @export var max_players: int = 4
 
@@ -9,10 +11,6 @@ func start_server(port : int) -> void:
 	network.create_server(port, max_players)
 	
 	multiplayer.multiplayer_peer = network
-	multiplayer.peer_connected.connect(on_peer_connected)
 	
+	spawn_host_player.emit()
 	print("Server listening on port: ", port)
-
-
-func on_peer_connected(id: int) -> void:
-	print("New player (", id, ") connected to server!")

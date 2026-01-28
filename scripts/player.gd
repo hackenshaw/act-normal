@@ -9,14 +9,23 @@ const JUMP_VELOCITY = 4.5
 @export var sensitivity_horizontal: float = 0.5
 @export var sensitivity_vertical: float = 0.5
 
+var pre_auth:int = 666
+
+
+func _ready() -> void:
+	set_multiplayer_authority(name.to_int())
+
 
 func _input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * sensitivity_horizontal))
 		visuals.rotate_y(deg_to_rad(event.relative.x * sensitivity_horizontal))
 		camera_mount.rotate_x(deg_to_rad(-event.relative.y * sensitivity_vertical))
 
+
 func _physics_process(delta: float) -> void:
+	if not is_multiplayer_authority(): return
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
