@@ -9,13 +9,17 @@ const JUMP_VELOCITY = 4.5
 
 @export var sensitivity_horizontal: float = 0.5
 @export var sensitivity_vertical: float = 0.5
+@export var min_pitch: float = -30.0
+@export var max_pitch: float = 30.0
 
 var pre_auth:int = 666
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
-	
+
+
+func _ready() -> void:
 	if not is_multiplayer_authority():
 		camera_3d.queue_free()
 
@@ -26,6 +30,8 @@ func _input(event: InputEvent) -> void:
 		rotate_y(deg_to_rad(-event.relative.x * sensitivity_horizontal))
 		visuals.rotate_y(deg_to_rad(event.relative.x * sensitivity_horizontal))
 		camera_mount.rotate_x(deg_to_rad(-event.relative.y * sensitivity_vertical))
+		# Clamp the vertical rotation
+		camera_mount.rotation_degrees.x = clamp(camera_mount.rotation_degrees.x, min_pitch, max_pitch)
 
 
 func _physics_process(delta: float) -> void:
