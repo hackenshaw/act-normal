@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cqdkwj4k76o1b"]
+
+[ext_resource type="PackedScene" uid="uid://cpelk3r71h7sh" path="res://assets/models/stone-wall.glb" id="1_0skly"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0s0t6"]
+size = Vector3(1, 1.1802979, 0.39198303)
+
+[node name="stone-wall2" unique_id=1562172963 instance=ExtResource("1_0skly")]
+
+[node name="stone-wall" parent="." index="0" unique_id=838332139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.36337185)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1" unique_id=49500799]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=1405440023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38604736, -0.05014801)
+shape = SubResource("BoxShape3D_0s0t6")

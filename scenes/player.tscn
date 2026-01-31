@@ -6,14 +6,50 @@
 height = 1.7
 radius = 0.3
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
-radius = 0.3
-height = 1.7
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_u8vuu"]
-top_radius = 0.0
-bottom_radius = 0.2
+[sub_resource type="SphereMesh" id="SphereMesh_3vyb7"]
+radius = 0.2
 height = 0.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_g2els"]
+radius = 0.21
+height = 0.3
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qhqgy"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g2els"]
+size = Vector3(0.3, 0.02, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dqkch"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qhqgy"]
+top_radius = 0.1
+bottom_radius = 0.13
+height = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3vyb7"]
+top_radius = 0.3
+bottom_radius = 0.2
+height = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g2els"]
+top_radius = 0.25
+bottom_radius = 0.2
+height = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vyb7"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qhqgy"]
+size = Vector3(0.28, 0.12, 0.23)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g2els"]
+albedo_color = Color(0.34813595, 0.14834142, 0.02532758, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
+size = Vector3(0.48, 0.65, 0.23)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3vyb7"]
 properties/0/path = NodePath(".:position")
@@ -27,7 +63,10 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=1303637510]
+collision_mask = 5
 script = ExtResource("1_3vyb7")
+sensitivity_horizontal = 0.2
+sensitivity_vertical = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1130899947]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
@@ -35,13 +74,48 @@ shape = SubResource("CylinderShape3D_u8vuu")
 
 [node name="Visuals" type="Node3D" parent="." unique_id=803842388]
 
-[node name="Body" type="MeshInstance3D" parent="Visuals" unique_id=181083294]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
-mesh = SubResource("CapsuleMesh_u8vuu")
+[node name="Head" type="MeshInstance3D" parent="Visuals" unique_id=1555233961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+mesh = SubResource("SphereMesh_3vyb7")
 
-[node name="Face" type="MeshInstance3D" parent="Visuals" unique_id=203014624]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.2, -0.2)
-mesh = SubResource("CylinderMesh_u8vuu")
+[node name="Hair" type="MeshInstance3D" parent="Visuals" unique_id=914055423]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.40525332, -0.9142044, 0, 0.9142044, 0.40525332, 0, 1.7, -0.022367626)
+mesh = SubResource("SphereMesh_g2els")
+
+[node name="Hat" type="MeshInstance3D" parent="Visuals" unique_id=1276602682]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9140649, 0.046287864)
+material_override = SubResource("StandardMaterial3D_qhqgy")
+mesh = SubResource("BoxMesh_g2els")
+skeleton = NodePath("")
+
+[node name="HatTop" type="MeshInstance3D" parent="Visuals/Hat" unique_id=1295453055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.054207325, 0)
+material_override = SubResource("StandardMaterial3D_dqkch")
+mesh = SubResource("CylinderMesh_qhqgy")
+
+[node name="Torso" type="MeshInstance3D" parent="Visuals" unique_id=237901389]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+mesh = SubResource("CylinderMesh_3vyb7")
+
+[node name="Legs" type="MeshInstance3D" parent="Visuals" unique_id=704419505]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+mesh = SubResource("CylinderMesh_g2els")
+
+[node name="Glasses" type="MeshInstance3D" parent="Visuals" unique_id=203014624]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.751, -0.073035754)
+material_override = SubResource("StandardMaterial3D_3vyb7")
+mesh = SubResource("BoxMesh_qhqgy")
+
+[node name="Backpack" type="MeshInstance3D" parent="Visuals" unique_id=630609783]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2792447, 0.35326672)
+material_override = SubResource("StandardMaterial3D_g2els")
+mesh = SubResource("BoxMesh_dqkch")
 
 [node name="CameraMount" type="Node3D" parent="." unique_id=2022280476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
