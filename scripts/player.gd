@@ -173,7 +173,7 @@ func npc_process(delta: float) -> void:
 			# Stuck detection
 			if global_position.distance_to(npc_last_position) < 0.01:
 				npc_stuck_timer += delta
-				if npc_stuck_timer > 2.0:
+				if npc_stuck_timer > npc_idle_max:
 					# Stuck - pick a new target
 					npc_stuck_timer = 0.0
 					pick_new_npc_target()
