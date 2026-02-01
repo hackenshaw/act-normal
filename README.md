@@ -3,8 +3,14 @@
 
 ## TODO:
 - [ ] Add fountain location
+- [ ] Hide mouse (and capture mouse)
 - [ ] Add better spawn points (for all characters inc. NPCs)
 - [ ] Randomize Spawn index positions
+
+- [ ] Answer phone system
+
+- [ ] detect if player stays in same spot (and still completes task)
+- [ ] Add nice sky
 
 - [ ] Change stone wall color
 - [ ] Fix wall clipping (camera)

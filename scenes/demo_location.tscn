@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c0itnl3srtyk7"]
 
 [ext_resource type="PackedScene" uid="uid://xoe01hddrhg2" path="res://scenes/ground.tscn" id="1_fmuvt"]
-[ext_resource type="PackedScene" uid="uid://ban6txax68jvd" path="res://scenes/obstacle.tscn" id="2_wfd2l"]
 [ext_resource type="Texture2D" uid="uid://8lvmaq2be7ys" path="res://assets/kenney-textures/Orange/texture_09.png" id="3_w06lw"]
 [ext_resource type="PackedScene" uid="uid://dtpl733fvcqd6" path="res://assets/models/ice-cream-cne.glb" id="3_xmk1k"]
 [ext_resource type="PackedScene" uid="uid://qhmf0doao0jq" path="res://assets/models/ice-cream-scoop-chocolate.glb" id="4_5je4r"]
@@ -61,18 +60,6 @@ size = Vector3(1.2370911, 2.122223, 2.5429993)
 [node name="Ground" parent="." unique_id=342744111 instance=ExtResource("1_fmuvt")]
 collision_layer = 4
 
-[node name="Obstacle" parent="." unique_id=1563822040 instance=ExtResource("2_wfd2l")]
-transform = Transform3D(0.73247164, 0, 0.6807976, 0, 1, 0, -0.6807976, 0, 0.73247164, 0, 0, -5.539594)
-visible = false
-
-[node name="Obstacle2" parent="." unique_id=972466715 instance=ExtResource("2_wfd2l")]
-transform = Transform3D(1.9318697, 0, -0.5175706, 0, 2, 0, 0.5175706, 0, 1.9318697, -5.44093, 0, -0.9994838)
-visible = false
-
-[node name="Obstacle3" parent="." unique_id=401115494 instance=ExtResource("2_wfd2l")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 6.803393, 0, 1.681752)
-visible = false
-
 [node name="IceCreamShop" type="Node3D" parent="." unique_id=481897737]
 transform = Transform3D(-0.79304516, 0, 0.6091629, 0, 1, 0, -0.6091629, 0, -0.79304516, -19.916126, 0, -18.504902)
 
@@ -113,6 +100,9 @@ shape = SubResource("BoxShape3D_7m1pn")
 transform = Transform3D(1, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1, 0.36939812, 0.44436646, -0.030022621)
 shape = SubResource("BoxShape3D_5t8yk")
 
+[node name="MeetingPoint" type="Node3D" parent="IceCreamShop" unique_id=598820636]
+transform = Transform3D(1, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1, 0.047389984, 0, 1.5818443)
+
 [node name="Bookstore" type="Node3D" parent="." unique_id=874436652]
 transform = Transform3D(0.017592102, 0, -0.99984527, 0, 1, 0, 0.99984527, 0, 0.017592102, -5.297327, 0, 20.270868)
 
@@ -143,6 +133,9 @@ collision_layer = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bookstore/StaticBody3D" unique_id=1901583684]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.410143, 1.8244629, 1.2565656)
 shape = SubResource("BoxShape3D_5302n")
+
+[node name="MeetingPoint" type="Node3D" parent="Bookstore" unique_id=1474141795]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25704575, 0, 1.5002522)
 
 [node name="PhoneBooth" type="Node3D" parent="." unique_id=1238577139]
 transform = Transform3D(-0.7969624, 0, -0.6040291, 0, 1, 0, 0.6040291, 0, -0.7969624, 29.34539, 9.536743e-07, -26.41892)
@@ -175,6 +168,9 @@ collision_layer = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PhoneBooth/StaticBody3D" unique_id=221938983]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.482731, 3.4784248, 1.2056227)
 shape = SubResource("BoxShape3D_1tqs1")
+
+[node name="MeetingPoint" type="Node3D" parent="PhoneBooth" unique_id=57753439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.6406975, 0.022684097, 2.4337406)
 
 [node name="Bench" type="Node3D" parent="." unique_id=1084678382]
 transform = Transform3D(0.7437518, 0, 0.66845584, 0, 1, 0, -0.66845584, 0, 0.7437518, 2.741932, 0, -4.344702)
@@ -219,6 +215,9 @@ shape = SubResource("BoxShape3D_aa2oo")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Bench/StaticBody3D" unique_id=1625226431]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.050827026, 0.56111145, 1.2428861)
 shape = SubResource("BoxShape3D_s5vuq")
+
+[node name="MeetingPoint" type="Node3D" parent="Bench" unique_id=369467097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0543022, 0, 0.7387222)
 
 [node name="Borders" type="Node3D" parent="." unique_id=1799840478]
 

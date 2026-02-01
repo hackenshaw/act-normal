@@ -10,14 +10,17 @@ const TASKS = {
 	"PhoneBooth": "Pick up the phone call at the phone booth"
 }
 
+
 #@onready var multiplayer_menu: MultiplayerMenu = %MultiplayerMenu
 @onready var e_net_server: ENetServer = %ENetServer
 @onready var e_net_client: ENetClient = %ENetClient
 @onready var players: PlayersManager = %Players
 
+
 @export var task_duration: float = 60.0
 @export var resolution_duration: float = 5.0
 @export var countdown_duration: float = 3.0
+
 
 
 var current_state: GameState = GameState.LOBBY
@@ -25,6 +28,7 @@ var active_tasks: Dictionary = {}  # { player_id: { "location": String, "complet
 var task_timer: float = 0.0
 var resolution_timer: float = 0.0
 var countdown_timer: float = 0.0
+
 
 # Track which keys have been revealed per target per recipient
 # Structure: { recipient_id: { target_id: [used_keys] } }
@@ -50,6 +54,11 @@ func _ready() -> void:
 	
 	# Wait a moment for spawning to happen, then check
 	await get_tree().create_timer(1.0).timeout
+	
+	await get_tree().physics_frame
+	var map = get_world_3d().navigation_map
+	print("Nav map valid: ", map.is_valid())
+	print("Nav map regions: ", NavigationServer3D.map_get_regions(map).size() if map.is_valid() else "INVALID")
 
 
 
@@ -87,6 +96,12 @@ func start_game():
 
 func start_task_phase():
 	current_state = GameState.PLAYING
+	
+	# Activate NPCs on first task phase
+	for player in players.get_children():
+		if player.is_npc and !player.npc_active:
+			player.activate_npc()
+			
 	assign_tasks()
 	task_timer = task_duration
 	sync_state.rpc(GameState.PLAYING)

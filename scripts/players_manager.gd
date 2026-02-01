@@ -6,13 +6,26 @@ const PLAYER_SCENE = preload("uid://c3liq1sfmyqp4")
 
 @onready var spawn_points = %SpawnPoints.get_children()
 
+#@onready var nav_region = $"../NavigationRegion3D"
+
 @export var NPC_count: int = 15
 
 var spawn_index = 0
 
+@onready var location_nodes = {
+	"IceCreamShop": %World/NavigationRegion3D/DemoLocation/IceCreamShop,
+	"Bookstore": %World/NavigationRegion3D/DemoLocation/Bookstore,
+	"PhoneBooth": %World/NavigationRegion3D/DemoLocation/PhoneBooth,
+	"Bench": %World/NavigationRegion3D/DemoLocation/Bench
+}
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#print("location_nodes: ", location_nodes)
+	#for key in location_nodes:
+	#	print("  ", key, ": ", location_nodes[key])
+	
 	multiplayer.peer_connected.connect(on_peer_connected)
 	
 	if multiplayer.is_server():
@@ -24,11 +37,11 @@ func on_peer_connected(id: int) -> void:
 		var player = PLAYER_SCENE.instantiate()
 		player.name = str(id)
 		
-		player.position = spawn_points[spawn_index % spawn_points.size()].position
-		#print(player.name, " is spawned at ", player.position)
+		player.global_position = spawn_points[spawn_index % spawn_points.size()].global_position
+		#print(player.name, " is spawned at ", player.global_position)
 		
 		add_child(player, true)
-		player.set_spawn_position.rpc(spawn_points[spawn_index % spawn_points.size()].position)
+		player.set_spawn_position.rpc(spawn_points[spawn_index % spawn_points.size()].global_position)
 		spawn_index += 1
 		
 		player.randomize_traits()
@@ -60,10 +73,13 @@ func spawn_npcs():
 		
 		add_child(npc, true)
 		npc.set_multiplayer_authority(1)
+		npc.npc_locations = location_nodes
+		#npc.npc_nav_region = nav_region
 		
 		# Random spawn position
-		var spawn_pos = spawn_points[randi() % spawn_points.size()].position
-		npc.position = spawn_pos
+		var spawn_pos = spawn_points[randi() % spawn_points.size()].global_position
+		npc.global_position = spawn_pos
+		print("Spawn point position: ", spawn_pos)
 		
 		# Randomize traits
 		npc.randomize_traits()

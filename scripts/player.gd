@@ -39,12 +39,27 @@ var _last_synced_visuals_rotation: float = 0.0
 var _lerp_smooth: float = 30.0
 
 var is_npc: bool = false
+# NPC variables
+var npc_target_location: String = ""
+var npc_idle_timer: float = 0.0
+var npc_state: String = "idle"  # "idle" or "moving"
+var npc_path: PackedVector3Array
+var npc_path_index: int = 0
+var npc_active: bool = false
+var npc_stuck_timer: float = 0.0
+var npc_last_position: Vector3 = Vector3.ZERO
+
+var npc_locations: Dictionary = {}
+#var npc_nav_region: NavigationRegion3D
 
 @export var spawn_pos := Vector3.ZERO
 @export var sensitivity_horizontal: float = 0.5
 @export var sensitivity_vertical: float = 0.5
 @export var min_pitch: float = -30.0
 @export var max_pitch: float = 30.0
+
+@export var npc_idle_min: float = 0.0
+@export var npc_idle_max: float = 10.0
 
 var pre_auth:int = 666
 
@@ -88,10 +103,13 @@ func apply_traits():
 func _ready() -> void:
 	if is_npc:
 		camera_3d.queue_free()
-		#set_physics_process(false)
 		set_process_input(false)
+		# Random initial idle so NPCs don't all move together
+		npc_idle_timer = randf_range(npc_idle_min, npc_idle_max)
+		npc_state = "idle"
 	if not is_multiplayer_authority():
 		camera_3d.queue_free()
+
 
 
 func _input(event: InputEvent) -> void:
@@ -107,14 +125,13 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): 
 		# Detect when synchronizer updates position (it changed from last frame)
-		if position != _last_synced_position:
+		if global_position != _last_synced_position:
 			_target_position = global_position
 			_last_synced_position = global_position
 			
 		# Interpolate toward target
-		position = position.lerp(_target_position, _lerp_smooth * delta)
+		global_position = global_position.lerp(_target_position, _lerp_smooth * delta)
 		return
-	
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -133,18 +150,103 @@ func _physics_process(delta: float) -> void:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 			
-			visuals.look_at(position + direction)
+			visuals.look_at(global_position + direction)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
-
+	else: # it is an npc
+		npc_process(delta)
+		
 	move_and_slide()
+
+
+func npc_process(delta: float) -> void:
+	match npc_state:
+		"idle":
+			npc_idle_timer -= delta
+			velocity.x = 0
+			velocity.z = 0
+			if npc_idle_timer <= 0:
+				pick_new_npc_target()
+		
+		"moving":
+			# Stuck detection
+			if global_position.distance_to(npc_last_position) < 0.01:
+				npc_stuck_timer += delta
+				if npc_stuck_timer > 2.0:
+					# Stuck - pick a new target
+					npc_stuck_timer = 0.0
+					pick_new_npc_target()
+					return
+			else:
+				npc_stuck_timer = 0.0
+				npc_last_position = global_position
+			if npc_path.is_empty():
+				# Arrived at destination - start idle
+				npc_state = "idle"
+				npc_idle_timer = randf_range(npc_idle_min, npc_idle_max)
+				velocity.x = 0
+				velocity.z = 0
+			else:
+				var next_point = npc_path[0]
+				#print("  next_point: ", next_point, " current: ", global_position, " distance: ", global_position.distance_to(next_point))
+				var direction = (next_point - global_position).normalized()
+				
+				# Check if we're close enough to this waypoint
+				if global_position.distance_to(next_point) < 0.5:
+					npc_path.remove_at(0)
+				else:
+					velocity.x = direction.x * SPEED
+					velocity.z = direction.z * SPEED
+					var look_dir = Vector3(direction.x, 0.0, direction.z)
+					if look_dir.length_squared() > 0.001:
+						visuals.look_at(global_position + look_dir)
+	
+	
+
+func pick_new_npc_target() -> void:
+	var location_names = npc_locations.keys()
+	
+	# Pick a random location that's different from current
+	var new_target = npc_target_location
+	while new_target == npc_target_location:
+		new_target = location_names[randi() % location_names.size()]
+	
+	npc_target_location = new_target
+	
+	# Get target position
+	var target_pos = npc_locations[npc_target_location].get_node("MeetingPoint").global_position
+	#print("NPC ", name, " from: ", global_position, " to: ", target_pos, " is_server: ", multiplayer.is_server())
+
+	# Wait for nav map to sync
+	await get_tree().physics_frame
+	
+	# Get navigation path
+	var map = get_world_3d().navigation_map
+	var start = NavigationServer3D.map_get_closest_point(map, global_position)
+	var end = NavigationServer3D.map_get_closest_point(map, target_pos)
+	
+	npc_path = NavigationServer3D.map_get_path(
+		map,
+		start,
+		end,
+		true
+	)
+	#print("  path result: ", npc_path)
+	npc_state = "moving"
+
+
+func activate_npc() -> void:
+	print("Activating NPC: ", name, " position: ", global_position, " is_server: ", multiplayer.is_server())
+	npc_active = true
+	npc_idle_timer = randf_range(npc_idle_min, npc_idle_max)
+	npc_state = "idle"
 
 
 @rpc("any_peer", "call_remote", "reliable")
 func set_spawn_position(pos):
 	#print("Set Spawn Position RPC called")
-	position = pos
+	global_position = pos
 
 
 @rpc("any_peer", "call_remote", "reliable")
