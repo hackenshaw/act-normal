@@ -1,16 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://rneglae45761"]
+[gd_scene format=3 uid="uid://rneglae45761"]
+
+[ext_resource type="Script" uid="uid://djgwpjwunncir" path="res://scripts/multiplayer_menu.gd" id="1_m4p4h"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_tbgi4"]
 
-[node name="MultiplayerMenu" type="Control"]
+[node name="MultiplayerMenu" type="Control" unique_id=106432199]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_m4p4h")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=751912934]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,87 +21,108 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+[node name="Panel" type="PanelContainer" parent="CenterContainer" unique_id=161332244]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel" unique_id=971511110]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Menu" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+[node name="Menu" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer" unique_id=1964152464]
 custom_minimum_size = Vector2(400, 100)
 layout_mode = 2
 
-[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu"]
+[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu" unique_id=326376280]
 layout_mode = 2
 text = "Multiplayer Menu"
 horizontal_alignment = 1
 
-[node name="PlayerItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu"]
+[node name="PlayerItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu" unique_id=2102174286]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/PlayerItem"]
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/PlayerItem" unique_id=259655477]
 layout_mode = 2
 text = "Player name:"
 
-[node name="PlayerName" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/PlayerItem"]
+[node name="PlayerName" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/PlayerItem" unique_id=1125460781]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Enter name"
 alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="CenterContainer/Panel/MarginContainer/Menu"]
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/Panel/MarginContainer/Menu" unique_id=576324534]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_tbgi4")
 
-[node name="HostItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu"]
+[node name="HostItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu" unique_id=1896912303]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem"]
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem" unique_id=298247440]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Host Game"
 
-[node name="HostPort" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem"]
+[node name="HostPort" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem" unique_id=1856040412]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "4242"
 alignment = 1
 
-[node name="HostButton" type="Button" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem"]
+[node name="HostButton" type="Button" parent="CenterContainer/Panel/MarginContainer/Menu/HostItem" unique_id=893574764]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "Host"
 
-[node name="JoinItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu"]
+[node name="JoinItem" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/Menu" unique_id=1243739234]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem"]
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem" unique_id=834322469]
 layout_mode = 2
 text = "Join Game"
 
-[node name="JoinIP" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem"]
+[node name="JoinIP" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem" unique_id=811107350]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "localhost"
 alignment = 1
 
-[node name="JoinPort" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem"]
+[node name="JoinPort" type="LineEdit" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem" unique_id=563734302]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "4242"
 alignment = 1
 
-[node name="JoinButton" type="Button" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem"]
+[node name="JoinButton" type="Button" parent="CenterContainer/Panel/MarginContainer/Menu/JoinItem" unique_id=507951230]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "Join"
+
+[node name="LobbyPanel" type="PanelContainer" parent="CenterContainer" unique_id=301874187]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/LobbyPanel" unique_id=1181264809]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/LobbyPanel/VBoxContainer" unique_id=1034760681]
+layout_mode = 2
+text = "Waiting for game to start..."
+
+[node name="StartButton" type="Button" parent="CenterContainer/LobbyPanel/VBoxContainer" unique_id=1910389023]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Start Game"
+
+[connection signal="pressed" from="CenterContainer/LobbyPanel/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]

@@ -16,12 +16,12 @@ func _on_body_entered(body):
 	if !multiplayer.is_server():
 		return
 	
-	print("something entered ", body.name)
 	# Ignore NPCs for now
 	if body.is_npc:
 		return
 	
-	print("Player ", body.name, " entered ", get_parent().name)
+	# Notify GameManager
+	get_tree().get_root().get_node("Main").on_player_entered_location(int(body.name), get_parent().name)
 
 func _on_body_exited(body):
 	if !multiplayer.is_server():
@@ -31,3 +31,7 @@ func _on_body_exited(body):
 		return
 	
 	print("Player ", body.name, " exited ", get_parent().name)
+
+
+func _on_detection_area_body_entered(body: Node3D) -> void:
+	pass # Replace with function body.

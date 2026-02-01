@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://du6fettd2wnau" path="res://scripts/players_manager.gd" id="3_tipki"]
 [ext_resource type="Script" uid="uid://bf0fk20vfk5sn" path="res://scripts/e_net_client.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://rneglae45761" path="res://scenes/multiplayer_menu.tscn" id="4_tefeu"]
-[ext_resource type="Script" uid="uid://djgwpjwunncir" path="res://scripts/multiplayer_menu.gd" id="5_o6xl0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -29,6 +28,7 @@ fog_density = 0.002
 script = ExtResource("1_tbgi4")
 
 [node name="World" type="Node3D" parent="." unique_id=449712865]
+unique_name_in_owner = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=1108695342]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 42.01123, 0)
@@ -39,7 +39,7 @@ environment = SubResource("Environment_sugp2")
 
 [node name="DemoLocation" parent="World" unique_id=2127402351 instance=ExtResource("1_o5qli")]
 
-[node name="Players" type="Node" parent="World" unique_id=1614373111]
+[node name="Players" type="Node3D" parent="World" unique_id=675672961]
 unique_name_in_owner = true
 script = ExtResource("3_tipki")
 
@@ -108,9 +108,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9508915, 3.2600212, 17.4756
 
 [node name="GUI" type="Node" parent="." unique_id=1929224827]
 
-[node name="MultiplayerMenu" parent="GUI" unique_id=1313663070 instance=ExtResource("4_tefeu")]
+[node name="MultiplayerMenu" parent="GUI" unique_id=106432199 instance=ExtResource("4_tefeu")]
 unique_name_in_owner = true
-script = ExtResource("5_o6xl0")
 
 [node name="ServerInterface" type="Node" parent="." unique_id=1626370400]
 

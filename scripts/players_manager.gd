@@ -1,5 +1,5 @@
 class_name PlayersManager
-extends Node
+extends Node3D
 
 
 const PLAYER_SCENE = preload("uid://c3liq1sfmyqp4")
@@ -35,15 +35,15 @@ func on_peer_connected(id: int) -> void:
 		player.apply_traits()
 		player.set_traits.rpc(player.traits)
 		
-		print("Parent node: ", self.name)
-		print("Children before spawn: ", get_children())
+		#print("Parent node: ", self.name)
+		#print("Children before spawn: ", get_children())
 
-		for child in get_children():
-			print("  Child: ", child.name, " type: ", child.get_class())
+		#for child in get_children():
+			#print("  Child: ", child.name, " type: ", child.get_class())
 	
 		for child in get_children():
 			if child != player and child.has_method("set_traits"):
-				print("  Sending traits of player ", child.name, ": ", child.traits)
+				#print("  Sending traits of player ", child.name, ": ", child.traits)
 				# Send existing player's traits only to the new client
 				child.set_traits.rpc_id(id, child.traits)
 

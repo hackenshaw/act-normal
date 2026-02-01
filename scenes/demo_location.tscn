@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cqdkwj4k76o1b" path="res://scenes/stone_wall.tscn" id="5_5je4r"]
 [ext_resource type="PackedScene" uid="uid://daiqttga2sx3q" path="res://assets/models/graveyard/pine.glb" id="6_76au2"]
 [ext_resource type="PackedScene" uid="uid://c8gg7uly5qvlp" path="res://assets/models/bench.glb" id="6_aa2oo"]
-[ext_resource type="Script" uid="uid://cbbk4fk6qqqfw" path="res://scripts/iceCream_detection_area.gd" id="6_s5vuq"]
+[ext_resource type="Script" uid="uid://cbbk4fk6qqqfw" path="res://scripts/location_detection_area.gd" id="6_s5vuq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_76au2"]
 albedo_texture = ExtResource("3_w06lw")
@@ -130,13 +130,15 @@ pixel_size = 0.02
 text = "BOOKSTORE"
 
 [node name="DetectionArea" type="Area3D" parent="Bookstore" unique_id=1512532416]
-visible = false
+collision_layer = 4
+script = ExtResource("6_s5vuq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bookstore/DetectionArea" unique_id=1480467661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9179554, 2.1475449, 1.2686024)
 shape = SubResource("BoxShape3D_dq88y")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Bookstore" unique_id=187994636]
+collision_layer = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bookstore/StaticBody3D" unique_id=1901583684]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.410143, 1.8244629, 1.2565656)
@@ -160,13 +162,15 @@ text = "Phone
 Booth"
 
 [node name="DetectionArea" type="Area3D" parent="PhoneBooth" unique_id=504170081]
-visible = false
+collision_layer = 4
+script = ExtResource("6_s5vuq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PhoneBooth/DetectionArea" unique_id=1175151381]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.266722, 2.0376778, 1.2185097)
 shape = SubResource("BoxShape3D_gd2y3")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="PhoneBooth" unique_id=1786408221]
+collision_layer = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PhoneBooth/StaticBody3D" unique_id=221938983]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.482731, 3.4784248, 1.2056227)
@@ -194,13 +198,15 @@ pixel_size = 0.02
 text = "Bench"
 
 [node name="DetectionArea" type="Area3D" parent="Bench" unique_id=785678008]
-visible = false
+collision_layer = 4
+script = ExtResource("6_s5vuq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bench/DetectionArea" unique_id=900209594]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3517151, 0.70843506, 1.253867)
 shape = SubResource("BoxShape3D_fmuvt")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Bench" unique_id=208728161]
+collision_layer = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bench/StaticBody3D" unique_id=1066504970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24345207, 3.475586, -2.8461819)
@@ -361,3 +367,9 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 24.480408, 0, -25)
 
 [connection signal="body_entered" from="IceCreamShop/DetectionArea" to="IceCreamShop/DetectionArea" method="_on_body_entered"]
 [connection signal="body_exited" from="IceCreamShop/DetectionArea" to="IceCreamShop/DetectionArea" method="_on_body_exited"]
+[connection signal="body_entered" from="Bookstore/DetectionArea" to="Bookstore/DetectionArea" method="_on_body_entered"]
+[connection signal="body_exited" from="Bookstore/DetectionArea" to="Bookstore/DetectionArea" method="_on_body_exited"]
+[connection signal="body_entered" from="PhoneBooth/DetectionArea" to="PhoneBooth/DetectionArea" method="_on_body_entered"]
+[connection signal="body_exited" from="PhoneBooth/DetectionArea" to="PhoneBooth/DetectionArea" method="_on_body_exited"]
+[connection signal="body_entered" from="Bench/DetectionArea" to="Bench/DetectionArea" method="_on_body_entered"]
+[connection signal="body_exited" from="Bench/DetectionArea" to="Bench/DetectionArea" method="_on_body_exited"]

@@ -41,6 +41,7 @@ var is_npc: bool = false
 
 var pre_auth:int = 666
 
+var current_task_location: String = ""
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -133,6 +134,12 @@ func set_spawn_position(pos):
 
 @rpc("any_peer", "call_remote", "reliable")
 func set_traits(new_traits: Dictionary):
-	print("Player ", name, " received traits: ", new_traits, " from peer: ", multiplayer.get_remote_sender_id())
+	#print("Player ", name, " received traits: ", new_traits, " from peer: ", multiplayer.get_remote_sender_id())
 	traits = new_traits
 	apply_traits()
+	
+	
+@rpc("authority", "call_local", "reliable")
+func receive_task(task_description: String, location_name: String):
+	current_task_location = location_name
+	print("Task received: ", task_description)  # We'll display this in UI later
