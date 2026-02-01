@@ -31,6 +31,13 @@ var traits = {
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
+var _last_synced_position: Vector3 = Vector3.ZERO
+var _target_position: Vector3 = Vector3.ZERO
+var _target_rotation_y: float = 0.0
+var _target_visuals_rotation_y: float = 0.0
+var _last_synced_visuals_rotation: float = 0.0
+var _lerp_smooth: float = 30.0
+
 var is_npc: bool = false
 
 @export var spawn_pos := Vector3.ZERO
@@ -98,7 +105,15 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not is_multiplayer_authority(): return
+	if not is_multiplayer_authority(): 
+		# Detect when synchronizer updates position (it changed from last frame)
+		if position != _last_synced_position:
+			_target_position = global_position
+			_last_synced_position = global_position
+			
+		# Interpolate toward target
+		position = position.lerp(_target_position, _lerp_smooth * delta)
+		return
 	
 	
 	# Add the gravity.
@@ -107,8 +122,8 @@ func _physics_process(delta: float) -> void:
 
 	if not is_npc:
 		# Handle jump.
-		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
+		#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+			#velocity.y = JUMP_VELOCITY
 
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
@@ -139,7 +154,10 @@ func set_traits(new_traits: Dictionary):
 	apply_traits()
 	
 	
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func receive_task(task_description: String, location_name: String):
 	current_task_location = location_name
-	print("Task received: ", task_description)  # We'll display this in UI later
+	if is_multiplayer_authority():
+		# Find GameHUD and show task
+		get_tree().get_root().get_node("Main/GUI/GameHUD").show_hud(task_description)
+		

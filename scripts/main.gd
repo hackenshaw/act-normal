@@ -46,14 +46,6 @@ func _ready() -> void:
 	
 	# Wait a moment for spawning to happen, then check
 	await get_tree().create_timer(1.0).timeout
-	
-	print("World visible: ", %World.visible)
-	print("World is_visible_in_tree: ", %World.is_visible_in_tree())
-	print("Players visible: ", players.visible)
-	print("Players is_visible_in_tree: ", players.is_visible_in_tree())
-	print("Players parent: ", players.get_parent().name)
-	print("Players parent visible: ", players.get_parent().visible)
-	print("Players parent is_visible_in_tree: ", players.get_parent().is_visible_in_tree())
 
 
 
@@ -140,7 +132,7 @@ func on_player_entered_location(player_id: int, location_name: String):
 	if current_state != GameState.PLAYING:
 		return
 	
-	print("Player ", player_id, " entered ", location_name)
+	#print("Player ", player_id, " entered ", location_name)
 	
 	if active_tasks.has(player_id):
 		#print("  Their task location: ", active_tasks[player_id].location)
@@ -162,8 +154,8 @@ func _on_state_changed(new_state: GameState) -> void:
 		GameState.COUNTDOWN:
 			%World.visible = true
 			%MultiplayerMenu.hide_lobby()
-
-
+		GameState.RESOLUTION:
+			%GameHUD.hide_hud()
 
 
 
@@ -173,6 +165,9 @@ func sync_state(new_state: GameState):
 	current_state = new_state
 	state_changed.emit(new_state)
 
+
 @rpc("authority", "call_local", "reliable")
 func sync_task_timer(time_left: float):
 	task_timer = time_left
+	#print("sync_task_timer called, game_hud: ", %GameHUD)
+	%GameHUD.update_timer(time_left)
