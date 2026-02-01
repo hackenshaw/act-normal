@@ -160,4 +160,10 @@ func receive_task(task_description: String, location_name: String):
 	if is_multiplayer_authority():
 		# Find GameHUD and show task
 		get_tree().get_root().get_node("Main/GUI/GameHUD").show_hud(task_description)
-		
+
+@rpc("any_peer", "call_local", "reliable")
+func receive_intel(intel_text: String):
+	if is_multiplayer_authority():
+		get_tree().get_root().get_node("Main/GUI/IntelHUD").add_intel(intel_text)
+	
+	

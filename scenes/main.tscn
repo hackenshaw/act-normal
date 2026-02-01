@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bf0fk20vfk5sn" path="res://scripts/e_net_client.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://rneglae45761" path="res://scenes/multiplayer_menu.tscn" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://g3rf3t4eco2x" path="res://scenes/game_hud.tscn" id="5_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://dddj2bal16okf" path="res://scenes/intel_hud.tscn" id="6_tipki"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -113,6 +114,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9508915, 3.2600212, 17.4756
 unique_name_in_owner = true
 
 [node name="GameHUD" parent="GUI" unique_id=1736851896 instance=ExtResource("5_o6xl0")]
+unique_name_in_owner = true
+visible = false
+
+[node name="IntelHUD" parent="GUI" unique_id=1785938731 instance=ExtResource("6_tipki")]
 unique_name_in_owner = true
 visible = false
 

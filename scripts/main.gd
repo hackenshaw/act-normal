@@ -26,6 +26,10 @@ var task_timer: float = 0.0
 var resolution_timer: float = 0.0
 var countdown_timer: float = 0.0
 
+# Track which keys have been revealed per target per recipient
+# Structure: { recipient_id: { target_id: [used_keys] } }
+var intel_history: Dictionary = {}
+
 signal state_changed(new_state: GameState)
 
 
@@ -141,12 +145,97 @@ func on_player_entered_location(player_id: int, location_name: String):
 			#print("  TASK COMPLETED!")
 
 
-# Placeholder for later
+func generate_intel_clue_for_key(target_traits: Dictionary, key: String) -> String:
+	match key:
+		"hair_color":
+			return "• One spy has %s hair" % target_traits.hair_color
+		"shirt_color":
+			return "• One spy is wearing a %s shirt" % target_traits.shirt_color
+		"pants_color":
+			return "• One spy is wearing %s pants" % target_traits.pants_color
+		"has_hat":
+			return "• One spy is %s a hat" % ("wearing" if target_traits.has_hat else "not wearing")
+		"has_glasses":
+			return "• One spy %s sunglasses" % ("has" if target_traits.has_glasses else "has no")
+		"has_backpack":
+			return "• One spy %s a backpack" % ("carries" if target_traits.has_backpack else "does not carry")
+	return ""
+
+
+func generate_intel_clue(target_traits: Dictionary) -> String:
+	var keys = ["hair_color", "shirt_color", "pants_color", "has_hat", "has_glasses", "has_backpack"]
+	var key = keys[randi() % keys.size()]
+	return generate_intel_clue_for_key(target_traits, key)
+
+
+func get_random_other_player(exclude_id: int) -> CharacterBody3D:
+	var other_players: Array = []
+	for player in players.get_children():
+		if player.is_npc:
+			continue
+		if int(player.name) == exclude_id:
+			continue
+		other_players.append(player)
+	
+	if other_players.is_empty():
+		return null
+	
+	return other_players[randi() % other_players.size()]
+
+
 func give_intel_on_success(player_id: int):
-	print("Player ", player_id, " succeeded - TODO: give intel")
+	var target = get_random_other_player(player_id)
+	if target == null:
+		return
+	
+	var clue = get_unused_clue(player_id, int(target.name), target.traits)
+	if clue.is_empty():
+		return
+	
+	var player = players.get_node(str(player_id))
+	player.receive_intel.rpc_id(player_id, clue)
+
 
 func give_intel_on_fail(player_id: int):
-	print("Player ", player_id, " failed - TODO: give intel")
+	var failed_player = players.get_node(str(player_id))
+	
+	for player in players.get_children():
+		if player.is_npc:
+			continue
+		if int(player.name) == player_id:
+			continue
+		
+		var clue = get_unused_clue(int(player.name), player_id, failed_player.traits)
+		if clue.is_empty():
+			continue
+		
+		player.receive_intel.rpc_id(int(player.name), clue)
+
+
+func get_unused_clue(recipient_id: int, target_id: int, target_traits: Dictionary) -> String:
+	# Initialize tracking dicts if needed
+	if !intel_history.has(recipient_id):
+		intel_history[recipient_id] = {}
+	if !intel_history[recipient_id].has(target_id):
+		intel_history[recipient_id][target_id] = []
+	
+	var used_keys: Array = intel_history[recipient_id][target_id]
+	var all_keys = ["hair_color", "shirt_color", "pants_color", "has_hat", "has_glasses", "has_backpack"]
+	
+	# Filter out already used keys
+	var available_keys: Array = all_keys.filter(func(key): return !used_keys.has(key))
+	
+	if available_keys.is_empty():
+		return ""  # All clues about this target already revealed
+	
+	# Pick random available key
+	var key = available_keys[randi() % available_keys.size()]
+	
+	# Track it
+	intel_history[recipient_id][target_id].append(key)
+	
+	return generate_intel_clue_for_key(target_traits, key)
+
 
 # When game state changes, show/hide world
 func _on_state_changed(new_state: GameState) -> void:
@@ -154,6 +243,7 @@ func _on_state_changed(new_state: GameState) -> void:
 		GameState.COUNTDOWN:
 			%World.visible = true
 			%MultiplayerMenu.hide_lobby()
+			%IntelHUD.visible = true
 		GameState.RESOLUTION:
 			%GameHUD.hide_hud()
 

@@ -4,6 +4,8 @@ extends Control
 @onready var task_label: Label = %TaskLabel
 @onready var timer_label: Label = %TimerLabel
 
+
+
 func show_hud(task_description: String) -> void:
 	visible = true
 	task_label.text = task_description
