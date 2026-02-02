@@ -43,7 +43,10 @@ func _ready() -> void:
 	%MultiplayerMenu.join_server_request.connect(e_net_client.connect_to_server)
 
 	e_net_server.spawn_host_player.connect(players.spawn_host_player)
-	
+
+	e_net_client.connection_failed.connect(%MultiplayerMenu.on_connection_failed)
+	e_net_client.server_disconnected.connect(%MultiplayerMenu.on_server_disconnected)
+
 	%MultiplayerMenu.start_game_request.connect(start_game)
 	
 

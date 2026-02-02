@@ -59,3 +59,20 @@ func hide_lobby() -> void:
 
 func _on_start_button_pressed() -> void:
 	start_game_request.emit()
+
+
+func on_connection_failed() -> void:
+	# Return to main menu
+	%Panel.visible = true
+	%LobbyPanel.visible = false
+	join_button.disabled = false
+	host_button.disabled = false
+
+
+func on_server_disconnected() -> void:
+	# Return to main menu
+	%Panel.visible = true
+	%LobbyPanel.visible = false
+	join_button.disabled = false
+	host_button.disabled = false
+	visible = true
