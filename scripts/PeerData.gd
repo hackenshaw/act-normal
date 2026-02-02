@@ -5,4 +5,4 @@ extends Node
 
 
 ## This peer's username
-#var name: String
+var player_name: String = ""

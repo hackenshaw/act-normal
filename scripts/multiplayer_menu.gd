@@ -38,9 +38,9 @@ func on_join_server_button_pressed() -> void:
 
 func set_player_name() -> void:
 	if player_name.text.is_empty():
-		PeerData.name = "Player" + str(randi_range(100_000_000, 999_999_999))
+		PeerData.player_name = "Player" + str(randi_range(100_000_000, 999_999_999))
 	else:
-		PeerData.name = player_name.text
+		PeerData.player_name = player_name.text
 
 
 # Lobby UI functions
