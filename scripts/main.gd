@@ -5,7 +5,7 @@ enum GameState { LOBBY, COUNTDOWN, PLAYING, RESOLUTION }
 
 const TASKS = {
 	"IceCreamShop": "Go buy 2 chocolate ice cream scoops",
-	"BookStore": "Find the note in 'The Spy HandBook' at the book store",
+	"Bookstore": "Find the note in 'The Spy HandBook' at the book store",
 	"Bench": "Meet the informant at the bench in Central Park",
 	"PhoneBooth": "Pick up the phone call at the phone booth"
 }
