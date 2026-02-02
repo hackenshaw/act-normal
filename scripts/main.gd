@@ -21,13 +21,14 @@ const TASKS = {
 @export var resolution_duration: float = 5.0
 @export var countdown_duration: float = 3.0
 
-
+const TIMER_SYNC_INTERVAL: float = 0.5
 
 var current_state: GameState = GameState.LOBBY
 var active_tasks: Dictionary = {}  # { player_id: { "location": String, "completed": bool } }
 var task_timer: float = 0.0
 var resolution_timer: float = 0.0
 var countdown_timer: float = 0.0
+var timer_sync_cooldown: float = 0.0
 
 
 # Track which keys have been revealed per target per recipient
@@ -75,7 +76,10 @@ func _process(delta: float) -> void:
 		
 		GameState.PLAYING:
 			task_timer -= delta
-			sync_task_timer.rpc(task_timer)
+			timer_sync_cooldown -= delta
+			if timer_sync_cooldown <= 0:
+				sync_task_timer.rpc(task_timer)
+				timer_sync_cooldown = TIMER_SYNC_INTERVAL
 			if task_timer <= 0:
 				resolve_tasks()
 		
