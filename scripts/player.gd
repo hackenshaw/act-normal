@@ -33,9 +33,6 @@ const JUMP_VELOCITY = 4.5
 
 var _last_synced_position: Vector3 = Vector3.ZERO
 var _target_position: Vector3 = Vector3.ZERO
-var _target_rotation_y: float = 0.0
-var _target_visuals_rotation_y: float = 0.0
-var _last_synced_visuals_rotation: float = 0.0
 var _lerp_smooth: float = 30.0
 
 var is_npc: bool = false
@@ -44,13 +41,11 @@ var npc_target_location: String = ""
 var npc_idle_timer: float = 0.0
 var npc_state: String = "idle"  # "idle" or "moving"
 var npc_path: PackedVector3Array
-var npc_path_index: int = 0
 var npc_active: bool = false
 var npc_stuck_timer: float = 0.0
 var npc_last_position: Vector3 = Vector3.ZERO
 
 var npc_locations: Dictionary = {}
-#var npc_nav_region: NavigationRegion3D
 
 @export var spawn_pos := Vector3.ZERO
 @export var sensitivity_horizontal: float = 0.5
@@ -60,8 +55,6 @@ var npc_locations: Dictionary = {}
 
 @export var npc_idle_min: float = 0.0
 @export var npc_idle_max: float = 10.0
-
-var pre_auth:int = 666
 
 var current_task_location: String = ""
 
