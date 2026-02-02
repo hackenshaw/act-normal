@@ -48,7 +48,8 @@ func _ready() -> void:
 	
 
 	state_changed.connect(_on_state_changed)
-	
+	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+
 	# Hide world until game starts
 	%World.visible = false
 	
@@ -246,6 +247,19 @@ func get_unused_clue(recipient_id: int, target_id: int, target_traits: Dictionar
 	intel_history[recipient_id][target_id].append(key)
 	
 	return generate_intel_clue_for_key(target_traits, key)
+
+
+func _on_peer_disconnected(id: int) -> void:
+	# Clean up active tasks for disconnected player
+	if active_tasks.has(id):
+		active_tasks.erase(id)
+
+	# Clean up intel history for disconnected player
+	if intel_history.has(id):
+		intel_history.erase(id)
+	for recipient_id in intel_history:
+		if intel_history[recipient_id].has(id):
+			intel_history[recipient_id].erase(id)
 
 
 # When game state changes, show/hide world

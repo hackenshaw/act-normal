@@ -27,7 +27,8 @@ func _ready() -> void:
 	#	print("  ", key, ": ", location_nodes[key])
 	
 	multiplayer.peer_connected.connect(on_peer_connected)
-	
+	multiplayer.peer_disconnected.connect(on_peer_disconnected)
+
 	if multiplayer.is_server():
 		spawn_npcs()
 
@@ -59,6 +60,13 @@ func on_peer_connected(id: int) -> void:
 				#print("  Sending traits of player ", child.name, ": ", child.traits)
 				# Send existing player's traits only to the new client
 				child.set_traits.rpc_id(id, child.traits)
+
+
+func on_peer_disconnected(id: int) -> void:
+	if multiplayer.is_server():
+		var player = get_node_or_null(str(id))
+		if player:
+			player.queue_free()
 
 
 func spawn_host_player() -> void:
