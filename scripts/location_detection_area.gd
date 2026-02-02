@@ -16,8 +16,6 @@ func _on_body_entered(body):
 func _on_body_exited(body):
 	if !multiplayer.is_server():
 		return
-	
+
 	if body.is_npc:
 		return
-	
-	print("Player ", body.name, " exited ", get_parent().name)

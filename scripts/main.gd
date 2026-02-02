@@ -52,13 +52,9 @@ func _ready() -> void:
 	# Hide world until game starts
 	%World.visible = false
 	
-	# Wait a moment for spawning to happen, then check
+	# Wait a moment for spawning to happen
 	await get_tree().create_timer(1.0).timeout
-	
 	await get_tree().physics_frame
-	var map = get_world_3d().navigation_map
-	print("Nav map valid: ", map.is_valid())
-	print("Nav map regions: ", NavigationServer3D.map_get_regions(map).size() if map.is_valid() else "INVALID")
 
 
 

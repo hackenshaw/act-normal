@@ -8,9 +8,7 @@ func connect_to_server(host_ip: String, port: int) -> void:
 	
 	multiplayer.multiplayer_peer = network
 	multiplayer.connected_to_server.connect(on_connected_to_server)
-	
-	print("Connecting to ", host_ip, ":", port)
 
 
 func on_connected_to_server() -> void:
-	print("Connected to server!")
+	pass

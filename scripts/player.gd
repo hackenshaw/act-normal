@@ -230,7 +230,6 @@ func pick_new_npc_target() -> void:
 
 
 func activate_npc() -> void:
-	print("Activating NPC: ", name, " position: ", global_position, " is_server: ", multiplayer.is_server())
 	npc_active = true
 	npc_idle_timer = randf_range(npc_idle_min, npc_idle_max)
 	npc_state = "idle"

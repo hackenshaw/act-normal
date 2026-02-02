@@ -79,7 +79,6 @@ func spawn_npcs():
 		# Random spawn position
 		var spawn_pos = spawn_points[randi() % spawn_points.size()].global_position
 		npc.global_position = spawn_pos
-		print("Spawn point position: ", spawn_pos)
 		
 		# Randomize traits
 		npc.randomize_traits()
